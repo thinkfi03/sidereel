@@ -1,0 +1,66 @@
+{
+  "name": "sidereel",
+  "displayName": "Sidereel",
+  "description": "A short-video sidecar that floats beside your editor, with a boss key and a weekly ledger of time watched versus lines written.",
+  "version": "0.1.0",
+  "preview": true,
+  "publisher": "Devxsh03eth",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "galleryBanner": { "color": "#100F0D", "theme": "dark" },
+  "repository": { "type": "git", "url": "https://github.com/thinkfi03/sidereel.git" },
+  "bugs": { "url": "https://github.com/thinkfi03/sidereel/issues" },
+  "homepage": "https://github.com/thinkfi03/sidereel#readme",
+  "categories": ["Other"],
+  "keywords": ["reels", "shorts", "break", "focus", "stats", "wrapped", "fun", "procrastination", "productivity"],
+  "engines": { "vscode": "^1.90.0" },
+  "extensionKind": ["ui"],
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      { "command": "sidereel.open", "title": "Sidereel: Open" },
+      { "command": "sidereel.close", "title": "Sidereel: Close" },
+      { "command": "sidereel.toggle", "title": "Sidereel: Toggle" },
+      { "command": "sidereel.bossKey", "title": "Sidereel: Boss Key (Hide / Show Instantly)" },
+      { "command": "sidereel.wrapped", "title": "Sidereel: Weekly Ledger" }
+    ],
+    "keybindings": [
+      { "command": "sidereel.toggle", "key": "ctrl+alt+r", "mac": "cmd+alt+r" },
+      { "command": "sidereel.bossKey", "key": "ctrl+shift+alt+b", "mac": "ctrl+cmd+b" }
+    ],
+    "configuration": {
+      "title": "Sidereel",
+      "properties": {
+        "sidereel.url": {
+          "type": "string",
+          "default": "https://www.instagram.com/reels/",
+          "description": "Page to open in the sidecar window. Any short-video site works, e.g. https://www.youtube.com/shorts/."
+        },
+        "sidereel.browserPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to a Chromium-based browser. Leave empty to auto-detect (Edge first on Windows, then Chrome)."
+        },
+        "sidereel.width": { "type": "number", "default": 420, "description": "Window width in pixels." },
+        "sidereel.height": { "type": "number", "default": 860, "description": "Window height in pixels." },
+        "sidereel.x": {
+          "type": "number",
+          "default": -1,
+          "description": "Window X position. -1 = right edge of the main screen."
+        },
+        "sidereel.y": { "type": "number", "default": 60, "description": "Window Y position." },
+        "sidereel.alwaysOnTop": {
+          "type": "boolean",
+          "default": true,
+          "description": "macOS: use the native floating window that stays above all other windows (including full-screen VS Code). Off = Chrome/Edge app window. On Windows the Edge/Chrome window is always kept on top."
+        },
+        "sidereel.mobileLayout": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use a phone user agent to get the site's mobile layout."
+        }
+      }
+    }
+  }
+}

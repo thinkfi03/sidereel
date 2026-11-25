@@ -1,0 +1,8 @@
+.github/**
+.gitignore
+docs/**
+**/*.vsix
+native/Sidereel.m
+native/build.sh
+native/icon/**
+node_modules/**

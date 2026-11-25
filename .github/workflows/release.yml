@@ -1,0 +1,44 @@
+# Push a tag like v0.1.0 to build the universal macOS app, package the .vsix,
+# attach it to a GitHub Release, and publish to the VS Code Marketplace and Open VSX
+# (publishing steps run only when the VSCE_PAT / OVSX_PAT secrets are set).
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build macOS app (universal)
+        run: ./native/build.sh
+
+      - name: Package VSIX
+        run: npx --yes @vscode/vsce package --out sidereel-${{ github.ref_name }}.vsix
+
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: sidereel-${{ github.ref_name }}.vsix
+
+      - name: Publish to VS Code Marketplace
+        if: ${{ env.VSCE_PAT != '' }}
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx --yes @vscode/vsce publish --packagePath sidereel-${{ github.ref_name }}.vsix
+
+      - name: Publish to Open VSX
+        if: ${{ env.OVSX_PAT != '' }}
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: npx --yes ovsx publish sidereel-${{ github.ref_name }}.vsix -p "$OVSX_PAT"

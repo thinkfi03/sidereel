@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><body style="margin:0;background:transparent">
+<canvas id="c" width="1024" height="1024"></canvas>
+<script>
+const g = document.getElementById('c').getContext('2d');
+const PAPER = '#F2EEE6', INK = '#1B1A18', ACCENT = '#8C2F25';
+// macOS icon grid: 824px squircle centred in 1024, soft drop shadow
+const x = 100, y = 100, s = 824, r = 186;
+function squircle() { g.beginPath(); g.roundRect(x, y, s, s, r); }
+g.save(); g.shadowColor = 'rgba(0,0,0,.28)'; g.shadowBlur = 28; g.shadowOffsetY = 12;
+squircle(); g.fillStyle = PAPER; g.fill(); g.restore();
+// paper gradient + grain, clipped to squircle
+g.save(); squircle(); g.clip();
+const lg = g.createLinearGradient(0, y, 0, y + s); lg.addColorStop(0, '#F7F4EE'); lg.addColorStop(1, '#E9E3D8');
+g.fillStyle = lg; g.fillRect(x, y, s, s);
+let seed = 3; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+for (let i = 0; i < 26000; i++) { g.fillStyle = rnd() > .5 ? 'rgba(0,0,0,.05)' : 'rgba(255,255,255,.35)'; g.fillRect(x + rnd() * s, y + rnd() * s, 1.6, 1.6); }
+g.restore();
+// orbit ring
+const cx = 512, cy = 512, R = 268;
+g.strokeStyle = INK; g.lineWidth = 9; g.beginPath(); g.arc(cx, cy, R, 0, Math.PI * 2); g.stroke();
+// fine inner hairline
+g.strokeStyle = 'rgba(27,26,24,.35)'; g.lineWidth = 3; g.beginPath(); g.arc(cx, cy, R - 30, 0, Math.PI * 2); g.stroke();
+// the star: oxblood dot on the ring at ~ 1-2 o'clock, with paper halo
+const a = -Math.PI / 4.2, sx = cx + R * Math.cos(a), sy = cy + R * Math.sin(a);
+g.fillStyle = PAPER; g.beginPath(); g.arc(sx, sy, 46, 0, Math.PI * 2); g.fill();
+g.fillStyle = ACCENT; g.beginPath(); g.arc(sx, sy, 30, 0, Math.PI * 2); g.fill();
+// italic serif S
+g.fillStyle = INK; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+g.font = 'italic 400 330px "Iowan Old Style", Charter, Baskerville, Georgia, serif';
+g.fillText('S', cx - 6, cy + 116);
+document.title = 'done';
+</script></body></html>
