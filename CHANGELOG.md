@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 (preview)
+
+- Fix: logo and Weekly Ledger images on the Marketplace and in the Extensions view.
+
 ## 0.1.0 (preview)
 
 - Sidecar window for short-video sites, pinned to the right edge of the screen.

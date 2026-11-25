@@ -2,7 +2,7 @@
   "name": "sidereel",
   "displayName": "Sidereel",
   "description": "A short-video sidecar that floats beside your editor, with a boss key and a weekly ledger of time watched versus lines written.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "preview": true,
   "publisher": "Devxsh03eth",
   "license": "MIT",
